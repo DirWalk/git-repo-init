@@ -1,3 +1,11 @@
+"""
+git-repo-init is used to initialize a repository on GitHub and locally, then sync the two.
+This will allow for a quick start to a project utilizing Git.
+"""
+
+__version__ = '1.0'
+
+
 import argparse
 import os
 import requests
@@ -6,6 +14,12 @@ import json
 
 
 def github_repo(repo_name, username, password):
+    """
+    Authenticate to GitHub utilizing GitHub API and initialize a repository.
+    :param repo_name: The name of the repository to initialize on GitHub.
+    :param username: The username that will be used to authenticate with GitHub.
+    :param password: The password or personal access token to authenticate with GitHub.
+    """
     url = 'https://api.github.com/user/repos'
     data = {"name": repo_name, "private": False}
     user = username
@@ -17,6 +31,13 @@ def github_repo(repo_name, username, password):
 
 
 def git_init(repo_name, username, password, connection_type):
+    """
+    Create an Git repository in the current directory and push it to a repository on GitHub.
+    :param repo_name: The name of the GitHub repository.
+    :param username: The username that will be used to authenticate with GitHub.
+    :param password: The password or personal access token to authenticate with GitHub.
+    :param connection_type: The type of connection to use to authenticate with GitHub. (default: https)
+    """
     with open('README.md', 'w') as f:
         f.write('# {}\n'.format(repo_name))
     os.system('git init')
@@ -34,7 +55,10 @@ def git_init(repo_name, username, password, connection_type):
         raise ValueError("Unsupported GitHub connection type: {}".format(connection_type))
 
 
-def run(arguments):
+def main(arguments):
+    """
+    Invokes Git initialization process.
+    """
     repo_name = arguments.repo_name
     username = arguments.username
     password = getpass.getpass('GitHub Personal Access Token: ')
@@ -51,6 +75,7 @@ def run(arguments):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Initialize a GitHub repository from the command line.")
+    parser.add_argument('-v', '-V', '--version', action='version', version='%(prog)s ver. ' + __version__)
     parser.add_argument('-r', '--repo-name', type=str, help='Name of the repository to be created.', required=True)
     parser.add_argument('-u', '--username', type=str, help='Name of the GitHub username.', required=True)
     parser.add_argument('--ssh', action='store_true', default=False, help='Use SSH connection to GitHub.',
@@ -58,4 +83,4 @@ if __name__ == '__main__':
     parser.add_argument('--https', action='store_true', default=False, help='Use HTTPS connection to GitHub. (default)',
                         dest='https_mode')
     args = parser.parse_args()
-    run(args)
+    main(args)
