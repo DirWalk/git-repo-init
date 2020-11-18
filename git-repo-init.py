@@ -74,13 +74,22 @@ def main(arguments):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Initialize a GitHub repository from the command line.")
-    parser.add_argument('-v', '-V', '--version', action='version', version='%(prog)s ver. ' + __version__)
-    parser.add_argument('-r', '--repo-name', type=str, help='Name of the repository to be created.', required=True)
-    parser.add_argument('-u', '--username', type=str, help='Name of the GitHub username.', required=True)
-    parser.add_argument('--ssh', action='store_true', default=False, help='Use SSH connection to GitHub.',
-                        dest='ssh_mode')
-    parser.add_argument('--https', action='store_true', default=False, help='Use HTTPS connection to GitHub. (default)',
-                        dest='https_mode')
+    parser = argparse.ArgumentParser(description="Initialize a GitHub repository from the command line.",
+                                     add_help=False)
+
+    required_args = parser.add_argument_group('required arguments')
+    required_args.add_argument('-r', '--repo-name', type=str, help='Name of the repository to be created',
+                               required=True)
+    required_args.add_argument('-u', '--username', type=str, help='Name of the GitHub username', required=True)
+
+    optional_args = parser.add_argument_group('optional arguments')
+    optional_args.add_argument('-h', '--help', action='help', help='Show this help message and exit')
+    optional_args.add_argument('-v', '--version', action='version', help='Show program\'s version number and exit',
+                               version='%(prog)s ver. ' + __version__)
+    optional_args.add_argument('--ssh', action='store_true', default=False, help='Use SSH connection to GitHub',
+                               dest='ssh_mode')
+    optional_args.add_argument('--https', action='store_true', default=False,
+                               help='Use HTTPS connection to GitHub (default)', dest='https_mode')
+
     args = parser.parse_args()
     main(args)
