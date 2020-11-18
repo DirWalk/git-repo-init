@@ -1,6 +1,6 @@
 # git-repo-init
 `git-repo-init.py` is a script to automate creation of a GitHub repository, a local repository, and make an initial
-commit just from the command line.
+commit from the command line.
 
 ## Installation:
 `pip install -r requirements`
@@ -10,8 +10,8 @@ commit just from the command line.
 repository.  This requires a GitHub `Personal Access Token`, which can be made in your GitHub accounts Developer 
 settings.
 
-In order to authenticate GitHub, `git-repo-init.py` will prompt for your `Personal Access Token` and use it for the POST
-authentication as well as the HTTPS connection method for your repository if you didn't choose to use SSH. If SSH 
+`git-repo-init.py` will prompt for your `Personal Access Token` and use it for the POST
+authentication, as well as the HTTPS connection method for your repository if you didn't choose to use SSH. If SSH 
 connection is requested, the standard SSH key procedures apply. 
 
 
@@ -37,11 +37,11 @@ Examples:
 
 ```
 # SSH GitHub initialization
-python git-repo-init.py -r TEST -u USER --ssh
+python git-repo-init.py -r TEST_REPO -u USER --ssh
 
 # HTTPS GitHub initialization
-python git-repo-init.py -r TEST -u USER --https
+python git-repo-init.py -r TEST_REPO -u USER --https
 
 # Also HTTPS GitHub initialization
-python git-repo-init.py -r TEST -u USER
+python git-repo-init.py -r TEST_REPO -u USER
 ```
