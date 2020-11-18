@@ -3,7 +3,7 @@ git-repo-init is used to initialize a repository on GitHub and locally, then syn
 This will allow for a quick start to a project utilizing Git.
 """
 
-__version__ = '1.0.1'
+__version__ = '1.1'
 
 
 import argparse

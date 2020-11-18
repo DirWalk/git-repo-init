@@ -47,3 +47,11 @@ python git-repo-init.py -r TEST_REPO -u USER --https
 # Also HTTPS GitHub initialization with Webhook setup
 python git-repo-init.py -r TEST_REPO -u USER -w https://example.com
 ```
+
+Webhook:
+
+Currently webhooks are limited to a basic webhook with the following parameters:
+
+* On Push requests
+* Insecure SSL
+* Content type: JSON
