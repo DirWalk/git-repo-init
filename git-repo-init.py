@@ -31,6 +31,13 @@ def github_repo(repo_name, username, password):
 
 
 def github_webhook(repo_name, username, password, webhook):
+    """
+    Authenticate to GitHub utilizing GitHub API and create a webhook.
+    :param repo_name: The name of the repository to initialize on GitHub.
+    :param username: The username that will be used to authenticate with GitHub.
+    :param password: The password or personal access token to authenticate with GitHub.
+    :param webhook: The URL for GitHub to send post requests.
+    """
     url = 'https://api.github.com/repos/{}/{}/hooks'.format(username, repo_name)
     data = {
         "name": "web",
