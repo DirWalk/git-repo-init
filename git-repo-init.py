@@ -3,7 +3,7 @@ git-repo-init is used to initialize a repository on GitHub and locally, then syn
 This will allow for a quick start to a project utilizing Git.
 """
 
-__version__ = '1.0'
+__version__ = '1.0.1'
 
 
 import argparse
@@ -22,6 +22,28 @@ def github_repo(repo_name, username, password):
     """
     url = 'https://api.github.com/user/repos'
     data = {"name": repo_name, "private": False}
+    user = username
+    ret = requests.post(url, data=json.dumps(data), auth=(user, password))
+
+    if ret.status_code != 201:
+        print(ret.text)
+        exit(1)
+
+
+def github_webhook(repo_name, username, password, webhook):
+    url = 'https://api.github.com/repos/{}/{}/hooks'.format(username, repo_name)
+    data = {
+        "name": "web",
+        "active": True,
+        "events": [
+            "push",
+        ],
+        "config": {
+            "url": webhook,
+            "content_type": "json",
+            "insecure_ssl": "0"
+        }
+    }
     user = username
     ret = requests.post(url, data=json.dumps(data), auth=(user, password))
 
@@ -66,6 +88,9 @@ def main(arguments):
 
     github_repo(repo_name, username, password)
 
+    if arguments.webhook_mode:
+        github_webhook(repo_name, username, password, arguments.webhook_mode)
+
     if args.ssh_mode:
         connection_type = 'SSH'
     else:
@@ -91,6 +116,8 @@ if __name__ == '__main__':
                                dest='ssh_mode')
     optional_args.add_argument('--https', action='store_true', default=False,
                                help='Use HTTPS connection to GitHub (default)', dest='https_mode')
+    optional_args.add_argument('-w', '--webhook-url', type=str, help='URL of webhook to setup for the repository',
+                               dest='webhook_mode', metavar='WEBHOOK_URL')
 
     args = parser.parse_args()
     main(args)

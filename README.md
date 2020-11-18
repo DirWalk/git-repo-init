@@ -31,6 +31,8 @@ Optional arguments are:
   -v, --version         Show program's version number and exit
   --ssh                 Use SSH connection to GitHub
   --https               Use HTTPS connection to GitHub (default)
+  -w WEBHOOK_URL, --webhook-url WEBHOOK_URL
+                        URL of webhook to setup for the repository
 ```
 
 Examples:
@@ -42,6 +44,6 @@ python git-repo-init.py -r TEST_REPO -u USER --ssh
 # HTTPS GitHub initialization
 python git-repo-init.py -r TEST_REPO -u USER --https
 
-# Also HTTPS GitHub initialization
-python git-repo-init.py -r TEST_REPO -u USER
+# Also HTTPS GitHub initialization with Webhook setup
+python git-repo-init.py -r TEST_REPO -u USER -w https://example.com
 ```
