@@ -73,7 +73,6 @@ def git_init(repo_name, username, password, connection_type):
     os.system('git add .')
     os.system('git -c user.name="{}" -c user.email="" commit -m "Initial commit"'.format(username))
     os.system('git branch -M main')
-    os.system('git branch --set-upstream-to=origin/main main')
 
     if connection_type == 'SSH':
         os.system('git remote add origin git@github.com:{}/{}.git'.format(username, repo_name))
